@@ -16,26 +16,26 @@
     <!-- 读取properties -->
 	<context:property-placeholder location="classpath:jdbcInfo.properties"/>
 	<!-- 创建数据源 c3p0-->
-	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+	<bean id="dataSourceId" class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}"></property>
 		<property name="jdbcUrl" value="${jdbc.jdbcUrl}"></property>
 		<property name="user" value="${jdbc.user}"></property>
 		<property name="password"  value="${jdbc.password}"></property>
 	</bean>
 	<!-- dao -->
-	<bean id="accountDao" class="com.xxt.transaction.dao.impl.AccountDaoImpl">
-		<property name="dataSource" ref="dataSource"></property>
+	<bean id="accountDaoId" class="com.xxt.transaction.dao.impl.AccountDaoImpl">
+		<property name="dataSource" ref="dataSourceId"></property>
 	</bean>
 	<!-- service -->
 	<bean id="accountService" class="com.xxt.transaction.service.impl.AccountServiceImpl">
-		<property name="accountDao" ref="accountDao"></property>
+		<property name="accountDao" ref="accountDaoId"></property>
 	</bean>
 	
 	
 <!-- 事务管理 -->
 	<!-- 事务管理器 -->
 	<bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-		<property name="dataSource" ref="dataSource"></property>
+		<property name="dataSource" ref="dataSourceId"></property>
 	</bean>
 	<!-- 4.2 事务详情（事务通知）  ， 在aop筛选基础上，对ABC三个确定使用什么样的事务。例如：AC读写、B只读 等
 		<tx:attributes> 用于配置事务详情（属性属性）
@@ -50,7 +50,7 @@
 	</tx:advice>
 	<!-- AOP编程  ,获得切入点-->
 	<aop:config >
-		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.xxt.transaction.service.impl.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut="execution(* com.xxt.transaction.service.impl.*.*(..))"/>
 	</aop:config>
 	
 	
@@ -58,3 +58,5 @@
 	
 
 </beans>
+
+
