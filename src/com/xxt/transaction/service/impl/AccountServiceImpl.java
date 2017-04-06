@@ -1,9 +1,5 @@
 package com.xxt.transaction.service.impl;
 
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.support.TransactionCallbackWithoutResult;
-import org.springframework.transaction.support.TransactionTemplate;
-
 import com.xxt.transaction.dao.AccountDao;
 import com.xxt.transaction.service.AccountService;
 
